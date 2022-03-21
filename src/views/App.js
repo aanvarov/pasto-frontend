@@ -1,11 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import { Layout } from "antd";
+import { useSelector } from "react-redux";
+import { Navigate, Route, Routes } from "react-router-dom";
+
+import { StyledApp } from "./App.style";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -17,6 +20,7 @@ function App() {
         >
           Learn React
         </a>
+        <Button type="primary">Hello</Button>
       </header>
     </div>
   );
