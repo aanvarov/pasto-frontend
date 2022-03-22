@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  lang: "uz",
   restaurant: {
     token: null,
     name: "",
@@ -39,8 +40,15 @@ export const profileSlice = createSlice({
         },
       };
     },
+    changeLang: (state, action) => {
+      return {
+        ...state,
+        lang: action.payload,
+      };
+    },
   },
 });
 
-export const { clearRestaurant, updateRestaurant } = profileSlice.actions;
+export const { clearRestaurant, updateRestaurant, changeLang } =
+  profileSlice.actions;
 export default profileSlice.reducer;

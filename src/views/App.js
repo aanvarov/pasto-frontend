@@ -4,25 +4,52 @@ import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import { StyledApp } from "./App.style";
+import { AUTH_ROUTES, MAIN_ROUTES } from "../router";
+import Sidebar from "../components/Sidebar/Sidebar";
 
+const { Content } = Layout;
 function App() {
+  const { token } = useSelector((state) => state.account.restaurant);
+
+  if (!token) {
+    return (
+      <Suspense fallback="Loading...">
+        <Routes>
+          {AUTH_ROUTES.map((item) => {
+            const { path, element: Component } = item;
+            return <Route key={path} path={path} element={<Component />} />;
+          })}
+        </Routes>
+      </Suspense>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Button type="primary">Hello</Button>
-      </header>
-    </div>
+    <StyledApp>
+      <Layout>
+        <Sidebar />
+        <Layout id="main">
+          <Content style={{ margin: "24px 16px 0" }}>
+            <div
+              className="site-layout-background"
+              style={{ padding: 24, minHeight: "calc(100vh - 48px)" }}
+            >
+              <Suspense fallback="Loading...">
+                <Routes>
+                  {MAIN_ROUTES.map((item) => {
+                    const { path, element: Component } = item;
+                    return (
+                      <Route key={path} path={path} element={<Component />} />
+                    );
+                  })}
+                  <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+              </Suspense>
+            </div>
+          </Content>
+        </Layout>
+      </Layout>
+    </StyledApp>
   );
 }
 
