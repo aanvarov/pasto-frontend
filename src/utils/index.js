@@ -24,3 +24,22 @@ export function pxToRem(size) {
   }
   throw new Error("size is not a number. Type numbers only");
 }
+
+export const getErrorMessage = (error) => {
+  if (error.response) {
+    if (error.response.status === 401) {
+      return t("You are not authorized");
+    }
+    if (error.response.status === 404) {
+      return t("Resource not found");
+    }
+    if (error.response.status === 403) {
+      return t("You are not authorized");
+    }
+    if (error.response.data) {
+      return error.response.data.message;
+    }
+  }
+
+  return error.message;
+};
