@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   lang: "uz",
   restaurant: {
-    token: null,
+    accessToken: null,
+    refreshToken: null,
     name: "",
     phone: "",
     workPhone: "",

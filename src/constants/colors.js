@@ -1,10 +1,10 @@
 const COLORS = {
-  main: "#00B074",
+  main: "#FF743D",
   lightGrey: "#fbfafa",
   success: "#42C293",
   danger: "#fc3400",
   grey: "#84818a",
-  black: "#2e2c34",
+  black: "#262626",
   border: "#ebeaed",
 };
 
