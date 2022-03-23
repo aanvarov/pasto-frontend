@@ -9,8 +9,12 @@ const baseURL =
 const axios = Axios.create({ baseURL, withCredentials: true });
 
 axios.interceptors.request.use((configs) => {
-  const token = store.getState().account.restaurant.token || "";
-  configs.headers.authorization = token ? `Bearer ${token}` : "";
+  const accessToken = store.getState().account.restaurant.accessToken || "";
+  configs.headers.authorization = accessToken ? `Bearer ${accessToken}` : "";
+  const refreshToken = store.getState().account.restaurant.refreshToken || "";
+  configs.headers["x-refresh-token"] = refreshToken
+    ? `Bearer ${refreshToken}`
+    : "";
   return configs;
 });
 

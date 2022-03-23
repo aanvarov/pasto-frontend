@@ -9,9 +9,9 @@ import Sidebar from "../components/Sidebar/Sidebar";
 
 const { Content } = Layout;
 function App() {
-  const { token } = useSelector((state) => state.account.restaurant);
+  const { accessToken } = useSelector((state) => state.account.restaurant);
 
-  if (!token) {
+  if (!accessToken) {
     return (
       <Suspense fallback="Loading...">
         <Routes>
@@ -36,7 +36,7 @@ function App() {
             >
               <Suspense fallback="Loading...">
                 <Routes>
-                  {MAIN_ROUTES.map((item) => {
+                  {MAIN_ROUTES?.map((item) => {
                     const { path, element: Component } = item;
                     return (
                       <Route key={path} path={path} element={<Component />} />

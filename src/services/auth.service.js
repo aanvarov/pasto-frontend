@@ -14,7 +14,7 @@ export const SIGN_UP = async (user) => {
 
 export const SIGN_IN = async (user) => {
   try {
-    const { data } = await axios.post("/auth/restaurants/login", user);
+    const { data } = await axios.post("/auth/restaurants/sessions", user);
     return data;
   } catch (error) {
     console.log(error);
