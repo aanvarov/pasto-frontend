@@ -9,9 +9,9 @@ import Sidebar from "../components/Sidebar/Sidebar";
 
 const { Content } = Layout;
 function App() {
-  const { accessToken } = useSelector((state) => state.account.restaurant);
+  const restaurant = useSelector((state) => state.account.restaurant);
 
-  if (!accessToken) {
+  if (!restaurant.accessToken) {
     return (
       <Suspense fallback="Loading...">
         <Routes>
@@ -42,7 +42,10 @@ function App() {
                       <Route key={path} path={path} element={<Component />} />
                     );
                   })}
-                  <Route path="*" element={<Navigate to="/" />} />
+                  <Route
+                    path="*"
+                    element={<Navigate to="/restaurants/category" />}
+                  />
                 </Routes>
               </Suspense>
             </div>
