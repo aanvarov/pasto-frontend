@@ -7,7 +7,7 @@ import { COLORS } from "../../constants";
 import { clearRestaurant } from "../../store/auth/reducer";
 import { MAIN_ROUTES } from "../../router";
 import { t } from "../../utils";
-import Languages from "../Languages";
+import Languages from "../Languages/Languages";
 import { BiLogOut } from "react-icons/bi";
 
 const { Sider } = Layout;

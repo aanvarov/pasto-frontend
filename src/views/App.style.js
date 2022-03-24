@@ -56,7 +56,6 @@ export const StyledApp = styled.main`
     font-style: normal;
     font-weight: normal;
     font-size: ${pxToRem(16)};
-    line-height: ${pxToRem(18)};
     &:hover {
       background-color: ${COLORS.darkGrey};
       color: ${COLORS.text};

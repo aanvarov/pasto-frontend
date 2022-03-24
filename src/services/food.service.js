@@ -2,18 +2,18 @@ import { message } from "antd";
 import axios from "../utils/axios";
 import { getErrorMessage } from "../utils";
 
-export const SIGN_UP = async (user) => {
+export const CREATE_FOOD = async (food) => {
   try {
-    const { data } = await axios.post("/auth/restaurants/signup", user);
+    const { data } = await axios.post("/foods", food);
     return data;
   } catch (error) {
     message.error(getErrorMessage(error));
   }
 };
 
-export const SIGN_IN = async (user) => {
+export const FETCH_FOODS = async () => {
   try {
-    const { data } = await axios.post("/auth/restaurants/sessions", user);
+    const { data } = await axios.get("/foods");
     return data;
   } catch (error) {
     message.error(getErrorMessage(error));
