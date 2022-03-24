@@ -2,28 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import {
-  AiOutlineUsergroupAdd,
-  AiOutlinePlusCircle,
-  AiOutlineShop,
-  AiOutlineFilePdf,
-} from "react-icons/ai";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import { BiCategory } from "react-icons/bi";
+import { IoFastFoodOutline } from "react-icons/io5";
 import { t } from "../../utils";
-
-import { BiCategory, BiDumbbell } from "react-icons/bi";
 
 import { StyledPageHeader } from "./PageHeader.style";
 import { COLORS } from "../../constants";
 import { pxToRem } from "../../utils";
 
 const ICONS = {
-  //   AiOutlineFilePdf: <AiOutlineFilePdf fill="#F40F02" />,
-  //   AiOutlineUsergroupAdd: (
-  //     <AiOutlineUsergroupAdd size={pxToRem(24)} color={COLORS.grey} />
-  //   ),
-  //   AiOutlineShop: <AiOutlineShop size={pxToRem(24)} color={COLORS.grey} />,
-  //   BiDumbbell: <BiDumbbell size={pxToRem(24)} color={COLORS.grey} />,
   BiCategory: <BiCategory size={pxToRem(24)} color={COLORS.grey} />,
+  IoFastFoodOutline: (
+    <IoFastFoodOutline size={pxToRem(24)} color={COLORS.grey} />
+  ),
 };
 
 export default function PageHeader({
