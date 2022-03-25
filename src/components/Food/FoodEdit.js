@@ -1,19 +1,21 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Modal, Input, Form, message, Select } from "antd";
-import { CREATE_FOOD } from "../../services/food.service";
 import PropTypes from "prop-types";
-import { t } from "../../utils";
+import { UPDATE_FOOD } from "../../services/food.service";
 import { FETCH_CATEGORIES } from "../../services/category.service";
+import { t } from "../../utils";
 
-const { Option } = Select;
 const { TextArea } = Input;
-export default function FoodAdd({ isVisible, hideModal, fetchData }) {
+const { Option } = Select;
+
+export default function FoodEdit({
+  isVisible,
+  hideModal,
+  fetchData,
+  data = {},
+}) {
   const [inputValues, setInputValues] = useState({
-    name: "",
-    price: 0,
-    description: "",
-    category: [],
-    img: "",
+    ...data,
   });
   const [categories, setCategories] = useState([]);
 
@@ -35,14 +37,12 @@ export default function FoodAdd({ isVisible, hideModal, fetchData }) {
   };
 
   const handleSubmit = async () => {
-    const { name, description, price, category, img } = inputValues;
-    if (!name || !description || !price || !category || !img) {
-      return message.error(t("Please fill all fields"));
-    }
-    const data = await CREATE_FOOD({ ...inputValues });
+    const { _id, ...rest } = inputValues;
+
+    const data = await UPDATE_FOOD(_id, { ...rest });
 
     if (data) {
-      message.success(t("Successfully created!"));
+      message.success(t("Food updated successfully"));
       fetchData();
       hideModal();
     }
@@ -54,10 +54,10 @@ export default function FoodAdd({ isVisible, hideModal, fetchData }) {
 
   return (
     <Modal
-      title={t("Add Food")}
+      title={t("Update Food")}
       style={{ top: 20 }}
       visible={isVisible}
-      okText={t("Create Food")}
+      okText={t("Update Food")}
       cancelText={t("Cancel")}
       onOk={handleSubmit}
       centered
@@ -105,7 +105,6 @@ export default function FoodAdd({ isVisible, hideModal, fetchData }) {
         <Form.Item label={t("Category")}>
           <Select
             style={{ width: "100%" }}
-            defaultValue="Choose category"
             onChange={handleSelectChange}
             value={inputValues.category}
           >
@@ -130,7 +129,7 @@ export default function FoodAdd({ isVisible, hideModal, fetchData }) {
   );
 }
 
-FoodAdd.propTypes = {
+FoodEdit.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   hideModal: PropTypes.func.isRequired,
 };
