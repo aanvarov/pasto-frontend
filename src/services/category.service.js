@@ -19,3 +19,30 @@ export const FETCH_CATEGORIES = async () => {
     message.error(getErrorMessage(error));
   }
 };
+
+export const FETCH_CATEGORY_DETAILS = async (id) => {
+  try {
+    const { data } = await axios.get(`/categories/${id}`);
+    return data;
+  } catch (error) {
+    message.error(getErrorMessage(error));
+  }
+};
+
+export const UPDATE_CATEGORY = async (id, category) => {
+  try {
+    const { data } = await axios.put(`/categories/${id}`, category);
+    return data;
+  } catch (error) {
+    message.error(getErrorMessage(error));
+  }
+};
+
+export const DELETE_CATEGORY = async (id, category) => {
+  try {
+    const { data } = await axios.delete(`/categories/${id}`);
+    return data;
+  } catch (error) {
+    message.error(getErrorMessage(error));
+  }
+};
