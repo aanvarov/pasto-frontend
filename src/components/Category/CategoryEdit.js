@@ -1,13 +1,17 @@
 import React, { useState, useCallback } from "react";
 import { Modal, Input, Form, message } from "antd";
-import { CREATE_CATEGORY } from "../../services/category.service";
 import PropTypes from "prop-types";
+import { UPDATE_CATEGORY } from "../../services/category.service";
 import { t } from "../../utils";
 
-export default function CategoryAdd({ isVisible, hideModal, fetchData }) {
+export default function CategoryEdit({
+  isVisible,
+  hideModal,
+  fetchData,
+  data = {},
+}) {
   const [inputValues, setInputValues] = useState({
-    name: "",
-    description: "",
+    ...data,
   });
 
   const handleInputChange = useCallback((e) => {
@@ -16,14 +20,12 @@ export default function CategoryAdd({ isVisible, hideModal, fetchData }) {
   }, []);
 
   const handleSubmit = async () => {
-    const { name, description } = inputValues;
-    if (!name || !description) {
-      return message.error(t("Please fill all fields"));
-    }
-    const data = await CREATE_CATEGORY({ ...inputValues });
+    const { _id, ...rest } = inputValues;
+
+    const data = await UPDATE_CATEGORY(_id, { ...rest });
 
     if (data) {
-      message.success(t("Successfully created!"));
+      message.success(t("Category updated successfully"));
       fetchData();
       hideModal();
     }
@@ -31,10 +33,10 @@ export default function CategoryAdd({ isVisible, hideModal, fetchData }) {
 
   return (
     <Modal
-      title={t("Add Category")}
+      title={t("Update Category")}
       style={{ top: 20 }}
       visible={isVisible}
-      okText={t("Create Category")}
+      okText={t("Update Category")}
       cancelText={t("Cancel")}
       onOk={handleSubmit}
       centered
@@ -75,7 +77,7 @@ export default function CategoryAdd({ isVisible, hideModal, fetchData }) {
   );
 }
 
-CategoryAdd.propTypes = {
+CategoryEdit.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   hideModal: PropTypes.func.isRequired,
 };
