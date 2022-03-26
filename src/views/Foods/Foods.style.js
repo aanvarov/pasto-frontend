@@ -9,6 +9,7 @@ const StyledFoods = styled.section`
     row-gap: 24px;
 
     .card {
+      position: relative;
       min-width: 336px;
       height: 480px;
       flex: 1;
@@ -17,6 +18,12 @@ const StyledFoods = styled.section`
       border-radius: 8px;
       text-align: center;
 
+      .ant-dropdown {
+        width: 40px;
+        position: absolute;
+        top: 10px;
+        left: 85%;
+      }
       img {
         width: 100%;
         max-height: 220px;

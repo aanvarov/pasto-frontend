@@ -49,7 +49,7 @@ function Category() {
     const data = await DELETE_CATEGORY(item?._id);
     if (data) {
       fetchData();
-      message.success(t("Equipment deleted successfully"));
+      message.success(t("Food deleted successfully"));
     }
   };
 

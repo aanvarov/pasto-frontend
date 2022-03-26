@@ -1,6 +1,6 @@
 import Axios from "axios";
 import store from "../store";
-import { clearRestaurant } from "../store/auth/reducer";
+import { clearRestaurant, updateRestaurant } from "../store/auth/reducer";
 
 const baseURL =
   process.env.NODE_ENV === "development"
@@ -21,6 +21,11 @@ axios.interceptors.request.use((configs) => {
 axios.interceptors.response.use(
   (res) => {
     console.log("axios res res", res);
+    if (res.headers["x-access-token"]) {
+      store.dispatch(
+        updateRestaurant({ accessToken: res.headers["x-access-token"] })
+      );
+    }
     return res;
   },
   (error) => {
