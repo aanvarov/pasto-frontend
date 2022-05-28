@@ -1,0 +1,10 @@
+import { ReactComponent as AdminLogo } from "../assets/images/svg/logo-sedap.svg";
+import { ReactComponent as DashboardIcon } from "../assets/images/svg/dashboard.svg";
+import { ReactComponent as FoodsIcon } from "../assets/images/svg/foods.svg";
+import { ReactComponent as OrderListIcon } from "../assets/images/svg/order-list.svg";
+import { ReactComponent as CategoryIcon } from "../assets/images/svg/category.svg";
+import { ReactComponent as NotificationIcon } from "../assets/images/svg/notification-Icon.svg";
+import { ReactComponent as MessageIcon } from "../assets/images/svg/message-icon.svg";
+import { ReactComponent as GiftIcon } from "../assets/images/svg/gift-icon.svg";
+import { ReactComponent as SettingsIcon } from "../assets/images/svg/settings-icon.svg";
+export { AdminLogo, DashboardIcon, FoodsIcon, OrderListIcon, CategoryIcon, NotificationIcon, MessageIcon, GiftIcon, SettingsIcon };

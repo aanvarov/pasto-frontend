@@ -9,6 +9,8 @@ import { MAIN_ROUTES } from "../../router";
 import { t } from "../../utils";
 import Languages from "../Languages/Languages";
 import { BiLogOut } from "react-icons/bi";
+import { AdminLogo } from "../../utils/Images";
+import { StyledSidebar } from "./Sidebar.style";
 
 const { Sider } = Layout;
 
@@ -33,7 +35,8 @@ export default function Sidebar() {
   };
 
   return (
-    <Sider
+    <StyledSidebar>
+      <Sider
       breakpoint="lg"
       collapsedWidth="80"
       className="custom-sidebar br-1"
@@ -41,7 +44,12 @@ export default function Sidebar() {
     >
       <div className="sidebar-inner-wrapper">
         <Link to="/profile" className="profile">
-          <div className="profile-image mb-2"></div>
+          <div className="profile-image mb-2">
+            <AdminLogo className="logo"/>
+          </div>
+          <div className="profile-title">
+            <h4>Moder Admin Dashboard</h4>
+          </div>
         </Link>
         <Divider style={{ margin: "3px 5px" }} />
         <Menu
@@ -69,5 +77,6 @@ export default function Sidebar() {
       </div>
       <Languages />
     </Sider>
+    </StyledSidebar>
   );
 }
