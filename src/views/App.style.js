@@ -203,4 +203,9 @@ export const StyledApp = styled.main`
   .ant-layout-sider-collapsed .ant-menu-submenu-title > span {
     display: none;
   }
+  @media only screen and (max-width: 990px) {
+    #main {
+      padding-left: ${pxToRem(80)};
+    }
+  }
 `;

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import { IoFastFoodOutline } from "react-icons/io5";
+import {OrderListIcon} from '../../utils/Images'
 import { t } from "../../utils";
 
 import { StyledPageHeader } from "./PageHeader.style";
@@ -15,6 +16,9 @@ const ICONS = {
   BiCategory: <BiCategory size={pxToRem(24)} color={COLORS.grey} />,
   IoFastFoodOutline: (
     <IoFastFoodOutline size={pxToRem(24)} color={COLORS.grey} />
+  ),
+  OrderListIcon: (
+    <OrderListIcon size={pxToRem(24)} color={COLORS.grey} />
   ),
 };
 

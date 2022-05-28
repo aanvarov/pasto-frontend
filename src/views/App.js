@@ -6,12 +6,13 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { StyledApp } from "./App.style";
 import { AUTH_ROUTES, MAIN_ROUTES } from "../router";
 import Sidebar from "../components/Sidebar/Sidebar";
+import Header from "../components/Header/Header";
 
 const { Content } = Layout;
 function App() {
   const restaurant = useSelector((state) => state.account.restaurant);
 
-  if (!restaurant.accessToken) {
+  if (restaurant.accessToken) {
     return (
       <Suspense fallback="Loading...">
         <Routes>
@@ -34,6 +35,7 @@ function App() {
               className="site-layout-background"
               style={{ padding: 24, minHeight: "calc(100vh - 48px)" }}
             >
+              <Header/>
               <Suspense fallback="Loading...">
                 <Routes>
                   {MAIN_ROUTES?.map((item) => {
