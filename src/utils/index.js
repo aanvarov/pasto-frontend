@@ -1,6 +1,6 @@
-import uz from "../lang/uz";
-import ru from "../lang/ru";
-import en from "../lang/en";
+import uz from "../lang/uz.json";
+import ru from "../lang/ru.json";
+import en from "../lang/en.json";
 import store from "../store";
 import { STYLING_CONFIGS } from "../constants";
 const dictionary = {
@@ -11,6 +11,7 @@ const dictionary = {
 
 export function t(str) {
   const lang = store.getState().account?.lang || "uz";
+  console.log(lang)
   if (dictionary[lang][str]) {
     return dictionary[lang][str];
   }

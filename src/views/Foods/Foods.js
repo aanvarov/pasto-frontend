@@ -99,9 +99,9 @@ function Foods() {
   return (
     <StyledFoods>
       <PageHeader
-        btnLabel={t("Add Food")}
+        btnLabel={t("Add food")}
         iconName="IoFastFoodOutline"
-        title="Food"
+        title={t("Foods")}
         data={data}
         onClick={handleShowModal}
       />
