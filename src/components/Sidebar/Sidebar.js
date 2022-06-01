@@ -30,6 +30,7 @@ export default function Sidebar() {
     }).then(async ({ value }) => {
       if (value) {
         dispatch(clearRestaurant());
+        localStorage.clear();
       }
     });
   };

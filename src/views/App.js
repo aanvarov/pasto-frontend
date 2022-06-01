@@ -12,7 +12,7 @@ const { Content } = Layout;
 function App() {
   const restaurant = useSelector((state) => state.account.restaurant);
 
-  if (restaurant.accessToken) {
+  if (!restaurant?.accessToken) {
     return (
       <Suspense fallback="Loading...">
         <Routes>

@@ -3,6 +3,8 @@ import {Table, Tag} from 'antd'
 import { StyledOrderList } from "./OrderList.style";
 import Pageheader from "../../components/PageHeader";
 import {FETCH_ORDERS} from '../../services/orders.service'
+import { io } from 'socket.io-client'
+
 
 function OrderList() {
   const [data, setData] = useState([
@@ -173,9 +175,20 @@ const getData = async () =>{
       key: 'order_status',
     },
   ];
-useEffect(() => {
-   getData();
-}, []);
+  useEffect(() => {
+    getData();
+    const socket = io('http://localhost:3001', {transports: ['websocket']});
+    socket.on("connect", () => {
+      console.log(socket.id);
+      socket.on("eshak", (data) => {
+        console.log(data);
+      })
+    });
+  }, []);
+
+
+
+
   return (
     <StyledOrderList>
       <Pageheader title="Your Orders" iconName="OrderListIcon" data={data} />

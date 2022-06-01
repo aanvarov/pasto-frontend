@@ -37,7 +37,8 @@ export const getErrorMessage = (error) => {
       return t("You are not authorized");
     }
     if (error.response.data) {
-      return error.response.data.message;
+      // console.log("error.response.data", error?.response?.data?.error);
+      return error?.response?.data?.error;
     }
   }
 
