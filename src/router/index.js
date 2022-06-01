@@ -36,7 +36,7 @@ export const MAIN_ROUTES = [
     path: "/restaurants/orders",
     element: OrderList,
     icon: <OrderListIcon size={24} />,
-    title: "Order List",
+    title: "Orders",
   },
 ];
 

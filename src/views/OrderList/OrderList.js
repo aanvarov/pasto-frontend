@@ -4,7 +4,7 @@ import { StyledOrderList } from "./OrderList.style";
 import Pageheader from "../../components/PageHeader";
 import {FETCH_ORDERS} from '../../services/orders.service'
 import { io } from 'socket.io-client'
-
+import { t } from "../../utils";
 
 function OrderList() {
   const [data, setData] = useState([
@@ -191,7 +191,7 @@ const getData = async () =>{
 
   return (
     <StyledOrderList>
-      <Pageheader title="Your Orders" iconName="OrderListIcon" data={data} />
+      <Pageheader title={t("Orders")} iconName="OrderListIcon" data={data} />
       <div>
       <Table
         columns={columns}
