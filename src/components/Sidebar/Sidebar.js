@@ -71,7 +71,7 @@ export default function Sidebar() {
             className="sidebar-item"
             icon={<BiLogOut />}
           >
-            <NavLink to="#">{t("Sign Out")}</NavLink>
+            <NavLink to="#">{t("Sign out")}</NavLink>
           </Menu.Item>
         </Menu>
       </div>

@@ -3,6 +3,7 @@ import {Table, Tag} from 'antd'
 import { StyledOrderList } from "./OrderList.style";
 import Pageheader from "../../components/PageHeader";
 import {FETCH_ORDERS} from '../../services/orders.service'
+import { t } from "../../utils";
 
 function OrderList() {
   const [data, setData] = useState([
@@ -178,7 +179,7 @@ useEffect(() => {
 }, []);
   return (
     <StyledOrderList>
-      <Pageheader title="Your Orders" iconName="OrderListIcon" data={data} />
+      <Pageheader title={t("Orders")} iconName="OrderListIcon" data={data} />
       <div>
       <Table
         columns={columns}

@@ -60,9 +60,9 @@ function Category() {
   return (
     <StyledCategory>
       <PageHeader
-        btnLabel={t("Add Category")}
+        btnLabel={t("Add category")}
         iconName="BiCategory"
-        title="Category"
+        title={t("Categories")}
         data={data}
         onClick={handleShowModal}
       />
