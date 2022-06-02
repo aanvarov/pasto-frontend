@@ -7,4 +7,24 @@ import { ReactComponent as NotificationIcon } from "../assets/images/svg/notific
 import { ReactComponent as MessageIcon } from "../assets/images/svg/message-icon.svg";
 import { ReactComponent as GiftIcon } from "../assets/images/svg/gift-icon.svg";
 import { ReactComponent as SettingsIcon } from "../assets/images/svg/settings-icon.svg";
-export { AdminLogo, DashboardIcon, FoodsIcon, OrderListIcon, CategoryIcon, NotificationIcon, MessageIcon, GiftIcon, SettingsIcon };
+import { ReactComponent as TotalOrdersIcon } from "../assets/images/svg/total-order.svg";
+import { ReactComponent as TotalDeliveredIcon } from "../assets/images/svg/total-delivered.svg";
+import { ReactComponent as TotalCancelledIcon } from "../assets/images/svg/total-canceled.svg";
+import { ReactComponent as TotalRevenueIcon } from "../assets/images/svg/total-revenue.svg";
+import { ReactComponent as EditeIcon } from "../assets/images/svg/edit-pen.svg";
+export {
+  AdminLogo,
+  DashboardIcon,
+  FoodsIcon,
+  OrderListIcon,
+  CategoryIcon,
+  NotificationIcon,
+  MessageIcon,
+  GiftIcon,
+  SettingsIcon,
+  TotalRevenueIcon,
+  TotalOrdersIcon,
+  TotalDeliveredIcon,
+  TotalCancelledIcon,
+  EditeIcon
+};

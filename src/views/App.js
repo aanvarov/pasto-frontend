@@ -46,7 +46,7 @@ function App() {
                   })}
                   <Route
                     path="*"
-                    element={<Navigate to="/restaurants/category" />}
+                    element={<Navigate to="/restaurants" />}
                   />
                 </Routes>
               </Suspense>

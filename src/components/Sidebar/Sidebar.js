@@ -11,6 +11,7 @@ import Languages from "../Languages/Languages";
 import { BiLogOut } from "react-icons/bi";
 import { AdminLogo } from "../../utils/Images";
 import { StyledSidebar } from "./Sidebar.style";
+import Links from "./Links";
 
 const { Sider } = Layout;
 
@@ -58,7 +59,7 @@ export default function Sidebar() {
           id="sidebar-menu"
           selectedKeys={[location.pathname]}
         >
-          {MAIN_ROUTES.map((item) => {
+          {Links.map((item) => {
             const { icon, path, title } = item;
             return (
               <Menu.Item key={path} className="sidebar-item" icon={icon}>

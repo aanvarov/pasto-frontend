@@ -44,7 +44,6 @@ const StyledFoods = styled.section`
         font-weight: bold;
       }
       p {
-        height: 60px;
         text-overflow: ellipsis;
         overflow: hidden;
         font-size: 14px;
