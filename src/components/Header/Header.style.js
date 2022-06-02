@@ -4,8 +4,9 @@ import { COLORS } from "../../constants";
 export const StyledHeader = styled.header`
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   margin-bottom: 25px;
+  width: 100%;
   .notifications {
     display: flex;
     align-items: center;
@@ -48,6 +49,7 @@ export const StyledHeader = styled.header`
     border-radius: 8px;
   }
   .user-profile {
+    width: 200px;
     display: flex;
     align-items: center;
     justify-content: space-between;

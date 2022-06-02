@@ -1,5 +1,6 @@
 import React from "react";
-import { Input, Space } from "antd";
+import { Input } from "antd";
+import { Link } from "react-router-dom";
 import { AudioOutlined } from "@ant-design/icons";
 import { StyledHeader } from "./Header.style";
 import {
@@ -41,15 +42,17 @@ function Header() {
           </div>
         </div>
         <div className="vertical-devider"></div>
-        <div className="user-profile">
-          <h3>Hello, Samantha</h3>
-          <div className="user-img">
-            <img
-              src="https://cdn.pixabay.com/photo/2022/05/22/12/08/baby-7213274__340.jpg"
-              alt="user-image"
-            />
-          </div>
-        </div>
+        <Link to="/restaurants/profile">
+          <div className="user-profile">
+            <h3>Hello, Samantha</h3>
+            <div className="user-img">
+              <img
+                src="https://cdn.pixabay.com/photo/2022/05/22/12/08/baby-7213274__340.jpg"
+                alt="user-image"
+              />
+            </div>
+          </div>{" "}
+        </Link>
       </div>
     </StyledHeader>
   );

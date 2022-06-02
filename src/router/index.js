@@ -12,11 +12,13 @@ const SignUp = lazy(() => import("../views/Auth/SignUp"));
 const SignIn = lazy(() => import("../views/Auth/SignIn"));
 const Category = lazy(() => import("../views/Category"));
 const Foods = lazy(() => import("../views/Foods"));
+const Dashboard = lazy(() => import("../views/Dashboard"));
+const Profile = lazy(() => import("../views/Profile"));
 
 export const MAIN_ROUTES = [
   {
     path: "/restaurants",
-    element: Foods,
+    element: Dashboard,
     icon: <DashboardIcon size={24} />,
     title: "Dashboard",
   },
@@ -38,6 +40,13 @@ export const MAIN_ROUTES = [
     icon: <OrderListIcon size={24} />,
     title: "Orders",
   },
+  {
+    path: "/restaurants/profile",
+    element: Profile,
+    icon: <OrderListIcon size={24} />,
+    title: "Orders",
+  },
+  
 ];
 
 export const AUTH_ROUTES = [

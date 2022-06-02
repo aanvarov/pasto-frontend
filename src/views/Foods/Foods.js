@@ -10,12 +10,19 @@ import {
   Dropdown,
   Menu,
   Popconfirm,
+  Row,
+  Col,
 } from "antd";
 import PageHeader from "../../components/PageHeader";
 import StyledFoods from "./Foods.style";
 import { t } from "../../utils";
 import { FETCH_FOODS, DELETE_FOOD } from "../../services/food.service";
-import { AiOutlineShoppingCart, AiOutlineMore } from "react-icons/ai";
+import {
+  AiOutlineShoppingCart,
+  AiOutlineMore,
+  AiOutlineEdit,
+  AiOutlineDelete,
+} from "react-icons/ai";
 
 const AddModal = lazy(() => import("../../components/Food/FoodAdd"));
 const EditModal = lazy(() => import("../../components/Food/FoodEdit"));
@@ -28,6 +35,7 @@ function Foods() {
   const [selectedFood, setSelectedFood] = useState(null);
   const [edit, setEdit] = useState(false);
 
+ 
   const fetchData = async () => {
     setLoading(true);
     const data = await FETCH_FOODS();
@@ -127,14 +135,14 @@ function Foods() {
       <div className="card-inner">
         {data?.map((item) => (
           <div key={item?._id} className="card">
-            <Dropdown overlay={menu(item)} trigger={["click"]}>
+            {/* <Dropdown overlay={menu(item)} trigger={["click"]}>
               <Button
                 className="ant-dropdown"
                 onClick={(e) => e.preventDefault()}
               >
                 <AiOutlineMore size={24} />
               </Button>
-            </Dropdown>
+            </Dropdown> */}
             <img src={item?.img} alt={item?.name} />
             <div className="card__body">
               <h2>{item?.name}</h2>
@@ -143,9 +151,34 @@ function Foods() {
                 {item?.price}
                 <sub>uzs</sub>
               </h2>
-              <Button size="large" type="primary">
+
+              <Row gutter={16} style={{"width": "100%"}}>
+                <Col span={12}>
+                  <Button
+                    style={{ width: "100%" }} size="large"
+                    type="primary"
+                    ghost
+                    onClick={() => handleEditModal(item)}
+                  >
+                    <AiOutlineEdit size={25} /> Edit
+                  </Button>
+                </Col>
+                <Col span={12}>
+                  <Popconfirm
+                    title={"Are you delete this food?"}
+                    onConfirm={() => handleDeleteFood(item)}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <Button style={{ width: "100%" }} size="large" type="primary" danger>
+                      <AiOutlineDelete size={25} /> Delete
+                    </Button>
+                  </Popconfirm>
+                </Col>
+              </Row>
+              {/* <Button size="large" type="primary">
                 <AiOutlineShoppingCart size={20} /> Add to Card
-              </Button>
+              </Button> */}
             </div>
           </div>
         ))}
