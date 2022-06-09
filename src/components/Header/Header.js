@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "antd";
+import { Input} from "antd";
 import { Link } from "react-router-dom";
 import { AudioOutlined } from "@ant-design/icons";
 import { StyledHeader } from "./Header.style";
@@ -11,9 +11,10 @@ import {
 } from "../../utils/Images";
 
 const { Search } = Input;
-
 function Header() {
   const onSearch = (value) => console.log(value);
+
+  
   return (
     <StyledHeader>
       <Search
@@ -51,7 +52,7 @@ function Header() {
                 alt="user-image"
               />
             </div>
-          </div>{" "}
+          </div>
         </Link>
       </div>
     </StyledHeader>
