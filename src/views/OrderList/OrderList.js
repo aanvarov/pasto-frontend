@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {Table, Tag} from 'antd'
+import { Table, Tag } from "antd";
 import { StyledOrderList } from "./OrderList.style";
 import Pageheader from "../../components/PageHeader";
-import {FETCH_ORDERS} from '../../services/orders.service'
-import { io } from 'socket.io-client'
+import { FETCH_ORDERS } from "../../services/orders.service";
+import { io } from "socket.io-client";
 import { t } from "../../utils";
 
 function OrderList() {
@@ -129,83 +129,87 @@ function OrderList() {
       order_status: "cancelled",
     },
   ]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [orders, setOrders] = useState([]);
 
-const getData = async () =>{
-  setLoading(true)
+  const getData = async () => {
+    setLoading(true);
     const data = await FETCH_ORDERS();
     if (data) {
-        setData(data);
+      console.log("orders", data);
+      setOrders(data);
+      setData(data);
     }
     setLoading(false);
-}
+  };
 
   const columns = [
     {
-      title: 'Order ID',
-      dataIndex: 'id',
-      key: 'id',
-      render: (text) => (`#${text}`),
+      title: "Order ID",
+      dataIndex: "orderId",
+      key: "orderId",
     },
     {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
     },
     {
-      title: 'Customer Name',
-      dataIndex: 'customer_name',
-      key: 'customer_name',
+      title: "Customer Name",
+      dataIndex: "customer",
+      key: "customer",
+      render: (text) => text.firstName + " " + text.lastName,
     },
     {
-      title: 'Location ',
-      dataIndex: 'location',
-      key: 'location',
+      title: "Location ",
+      dataIndex: "customer",
+      key: "customer",
+      render: (text) => text.address,
     },
     {
-      title: 'Amount ',
-      dataIndex: 'amount',
-      key: 'amount',
+      title: "Amount ",
+      dataIndex: "total",
+      key: "total",
+      render: (text) => `${text} UZS`,
     },
     {
-      title: 'Status',
-      dataIndex: 'order_status',
-      key: 'order_status',
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (text) => (text == "pending" ? "New Order" : "On Delivery"),
     },
   ];
   useEffect(() => {
     getData();
-    const socket = io('http://localhost:3001', {transports: ['websocket']});
+    const socket = io("http://localhost:3001", { transports: ["websocket"] });
     socket.on("connect", () => {
       console.log(socket.id);
       socket.on("eshak", (data) => {
-        console.log(data);
-      })
+        console.log("sdsdsd", data);
+        getData();
+      });
     });
   }, []);
 
-
-
-
   return (
     <StyledOrderList>
-      <Pageheader title={t("Orders")} iconName="OrderListIcon" data={data} />
+      <Pageheader title={t("Orders")} iconName="OrderListIcon" data={orders} />
       <div>
-      <Table
-        columns={columns}
-        loading={loading}
-        dataSource={data}
-        pagination={{
+        <Table
+          columns={columns}
+          loading={loading}
+          dataSource={orders}
+          pagination={{
             current: page,
             pageSize: pageSize,
-            onChange:(page, pageSize) => {
-                setPage(page);
-                setPageSize(pageSize);
-            }
-        }}
-      />
+            onChange: (page, pageSize) => {
+              setPage(page);
+              setPageSize(pageSize);
+            },
+          }}
+        />
       </div>
     </StyledOrderList>
   );
