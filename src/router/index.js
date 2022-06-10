@@ -6,8 +6,8 @@ import { FoodsIcon } from "../utils/Images";
 import { OrderListIcon } from "../utils/Images";
 import { DashboardIcon } from "../utils/Images";
 
-
 const OrderList = lazy(() => import("../views/OrderList"));
+const OrderDetails = lazy(() => import("../components/Order/OrderDetails"));
 const SignUp = lazy(() => import("../views/Auth/SignUp"));
 const SignIn = lazy(() => import("../views/Auth/SignIn"));
 const Category = lazy(() => import("../views/Category"));
@@ -41,12 +41,15 @@ export const MAIN_ROUTES = [
     title: "Orders",
   },
   {
+    path: "/restaurants/orderdetails",
+    element: OrderDetails,
+  },
+  {
     path: "/restaurants/profile",
     element: Profile,
     icon: <OrderListIcon size={24} />,
     title: "Orders",
   },
-  
 ];
 
 export const AUTH_ROUTES = [

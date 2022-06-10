@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Tag } from "antd";
+import { useNavigate } from "react-router-dom";
 import { StyledOrderList } from "./OrderList.style";
 import Pageheader from "../../components/PageHeader";
 import { FETCH_ORDERS } from "../../services/orders.service";
@@ -133,6 +134,7 @@ function OrderList() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
   const getData = async () => {
     setLoading(true);
@@ -181,26 +183,67 @@ function OrderList() {
       render: (text) => (text == "pending" ? "New Order" : "On Delivery"),
     },
   ];
-  useEffect(() => {
-    getData();
-    const socket = io("http://localhost:3001", { transports: ["websocket"] });
-    socket.on("connect", () => {
-      console.log(socket.id);
-      socket.on("eshak", (data) => {
-        console.log("sdsdsd", data);
-        getData();
-      });
-    });
-  }, []);
+
+  const fakeColumns = [
+    {
+      title: "Order ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Customer Name",
+      dataIndex: "customer_name",
+      key: "customer_name",
+    },
+    {
+      title: "Location ",
+      dataIndex: "location",
+      key: "location",
+    },
+    {
+      title: "Amount ",
+      dataIndex: "amount",
+      key: "amount",
+      render: (text) => `${text} UZS`,
+    },
+    {
+      title: "Status",
+      dataIndex: "order_status",
+      key: "order_status",
+      render: (text) => (text == "pending" ? "New Order" : "On Delivery"),
+    },
+  ];
+
+  // useEffect(() => {
+  //   getData();
+  //   const socket = io("http://localhost:3001", { transports: ["websocket"] });
+  //   socket.on("connect", () => {
+  //     console.log(socket.id);
+  //     socket.on("eshak", (data) => {
+  //       console.log("sdsdsd", data);
+  //       getData();
+  //     });
+  //   });
+  // }, []);
 
   return (
     <StyledOrderList>
-      <Pageheader title={t("Orders")} iconName="OrderListIcon" data={orders} />
+      <Pageheader title={t("Orders")} iconName="OrderListIcon" data={data} />
       <div>
         <Table
-          columns={columns}
-          loading={loading}
-          dataSource={orders}
+          columns={fakeColumns}
+          // loading={loading}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => navigate(`/restaurants/orders/${record.id}`),
+            };
+          }}
+          dataSource={data}
           pagination={{
             current: page,
             pageSize: pageSize,

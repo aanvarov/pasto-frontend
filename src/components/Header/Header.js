@@ -1,5 +1,5 @@
 import React from "react";
-import { Input} from "antd";
+import { Input } from "antd";
 import { Link } from "react-router-dom";
 import { AudioOutlined } from "@ant-design/icons";
 import { StyledHeader } from "./Header.style";
@@ -9,12 +9,12 @@ import {
   NotificationIcon,
   SettingsIcon,
 } from "../../utils/Images";
+import Profile from "../../assets/images/profile.jpg";
 
 const { Search } = Input;
 function Header() {
   const onSearch = (value) => console.log(value);
 
-  
   return (
     <StyledHeader>
       <Search
@@ -47,10 +47,7 @@ function Header() {
           <div className="user-profile">
             <h3>Hello, Samantha</h3>
             <div className="user-img">
-              <img
-                src="https://cdn.pixabay.com/photo/2022/05/22/12/08/baby-7213274__340.jpg"
-                alt="user-image"
-              />
+              <img src={Profile} alt="user-image" />
             </div>
           </div>
         </Link>
