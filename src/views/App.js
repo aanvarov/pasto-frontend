@@ -11,7 +11,7 @@ import Header from "../components/Header/Header";
 const { Content } = Layout;
 function App() {
   const restaurant = useSelector((state) => state.account.restaurant);
-
+  console.log("redss", restaurant);
   if (!restaurant?.accessToken) {
     return (
       <Suspense fallback="Loading...">
@@ -35,19 +35,14 @@ function App() {
               className="site-layout-background"
               style={{ padding: 24, minHeight: "calc(100vh - 48px)" }}
             >
-              <Header/>
+              <Header />
               <Suspense fallback="Loading...">
                 <Routes>
                   {MAIN_ROUTES?.map((item) => {
                     const { path, element: Component } = item;
-                    return (
-                      <Route key={path} path={path} element={<Component />} />
-                    );
+                    return <Route key={path} path={path} element={<Component />} />;
                   })}
-                  <Route
-                    path="*"
-                    element={<Navigate to="/restaurants" />}
-                  />
+                  <Route path="*" element={<Navigate to="/restaurants" />} />
                 </Routes>
               </Suspense>
             </div>

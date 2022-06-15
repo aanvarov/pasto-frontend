@@ -1,20 +1,15 @@
 import React from "react";
-import { Input} from "antd";
+import { Input } from "antd";
 import { Link } from "react-router-dom";
 import { AudioOutlined } from "@ant-design/icons";
 import { StyledHeader } from "./Header.style";
-import {
-  GiftIcon,
-  MessageIcon,
-  NotificationIcon,
-  SettingsIcon,
-} from "../../utils/Images";
+import { GiftIcon, MessageIcon, NotificationIcon, SettingsIcon } from "../../utils/Images";
+import { useSelector } from "react-redux";
 
 const { Search } = Input;
 function Header() {
   const onSearch = (value) => console.log(value);
-
-  
+  const restaurant = useSelector((state) => state.account.restaurant);
   return (
     <StyledHeader>
       <Search
@@ -45,7 +40,7 @@ function Header() {
         <div className="vertical-devider"></div>
         <Link to="/restaurants/profile">
           <div className="user-profile">
-            <h3>Hello, Samantha</h3>
+            <h3>Hello, {restaurant?.name}</h3>
             <div className="user-img">
               <img
                 src="https://cdn.pixabay.com/photo/2022/05/22/12/08/baby-7213274__340.jpg"
