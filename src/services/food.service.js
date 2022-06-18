@@ -46,3 +46,12 @@ export const DELETE_FOOD = async (id) => {
     message.error(getErrorMessage(error));
   }
 };
+
+export const UPDATE_STATUS_FOOD = async (id, status) => {
+  try {
+    const { data } = await axios.put(`/foods/${id}`, status);
+    return data;
+  } catch (error) {
+    message.error(getErrorMessage(error));
+  }
+};

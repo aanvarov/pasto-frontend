@@ -18,6 +18,20 @@ const StyledFoods = styled.section`
       border-radius: 8px;
       text-align: center;
 
+      .imageWrapper {
+        position: relative;
+      }
+
+      .black-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(126, 0, 0, 0.7);
+        border-radius: 8px;
+      }
+
       .ant-dropdown {
         width: 40px;
         position: absolute;
