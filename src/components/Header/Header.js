@@ -10,11 +10,12 @@ import {
   SettingsIcon,
 } from "../../utils/Images";
 import Profile from "../../assets/images/profile.jpg";
+import { useSelector } from "react-redux";
 
 const { Search } = Input;
 function Header() {
   const onSearch = (value) => console.log(value);
-
+  const restaurant = useSelector((state) => state.account.restaurant);
   return (
     <StyledHeader>
       <Search
@@ -45,7 +46,7 @@ function Header() {
         <div className="vertical-devider"></div>
         <Link to="/restaurants/profile">
           <div className="user-profile">
-            <h3>Hello, Samantha</h3>
+            <h3>Hello, {restaurant?.name}</h3>
             <div className="user-img">
               <img src={Profile} alt="user-image" />
             </div>

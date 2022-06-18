@@ -38,47 +38,38 @@ export default function Sidebar() {
 
   return (
     <StyledSidebar>
-      <Sider
-      breakpoint="lg"
-      collapsedWidth="80"
-      className="custom-sidebar br-1"
-      width="250"
-    >
-      <div className="sidebar-inner-wrapper">
-        <Link to="/profile" className="profile">
-          <div className="profile-image mb-2">
-            <AdminLogo className="logo"/>
-          </div>
-          <div className="profile-title">
-            <h4>Moder Admin Dashboard</h4>
-          </div>
-        </Link>
-        <Divider style={{ margin: "3px 5px" }} />
-        <Menu
-          mode="inline"
-          id="sidebar-menu"
-          selectedKeys={[location.pathname]}
-        >
-          {Links.map((item) => {
-            const { icon, path, title } = item;
-            return (
-              <Menu.Item key={path} className="sidebar-item" icon={icon}>
-                <NavLink to={path}>{t(title)}</NavLink>
-              </Menu.Item>
-            );
-          })}
-          <Menu.Item
-            key="logout"
-            onClick={handleLogOut}
-            className="sidebar-item"
-            icon={<BiLogOut />}
-          >
-            <NavLink to="#">{t("Sign out")}</NavLink>
-          </Menu.Item>
-        </Menu>
-      </div>
-      <Languages />
-    </Sider>
+      <Sider breakpoint="lg" collapsedWidth="80" className="custom-sidebar br-1" width="250">
+        <div className="sidebar-inner-wrapper">
+          <Link to="/profile" className="profile">
+            <div className="profile-image mb-2">
+              <AdminLogo className="logo" />
+            </div>
+            <div className="profile-title">
+              <h4>Yemek Admin Dashboard</h4>
+            </div>
+          </Link>
+          <Divider style={{ margin: "3px 5px" }} />
+          <Menu mode="inline" id="sidebar-menu" selectedKeys={[location.pathname]}>
+            {Links.map((item) => {
+              const { icon, path, title } = item;
+              return (
+                <Menu.Item key={path} className="sidebar-item" icon={icon}>
+                  <NavLink to={path}>{t(title)}</NavLink>
+                </Menu.Item>
+              );
+            })}
+            <Menu.Item
+              key="logout"
+              onClick={handleLogOut}
+              className="sidebar-item"
+              icon={<BiLogOut />}
+            >
+              <NavLink to="#">{t("Sign out")}</NavLink>
+            </Menu.Item>
+          </Menu>
+        </div>
+        <Languages />
+      </Sider>
     </StyledSidebar>
   );
 }

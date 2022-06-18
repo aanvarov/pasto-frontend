@@ -147,6 +147,10 @@ function OrderList() {
     setLoading(false);
   };
 
+  const updateOrder = (order) => {
+    console.log("updateOrder", order);
+  };
+
   const columns = [
     {
       title: "Order ID",
@@ -181,6 +185,13 @@ function OrderList() {
       dataIndex: "status",
       key: "status",
       render: (text) => (text == "pending" ? "New Order" : "On Delivery"),
+    },
+    {
+      title: "",
+      dataIndex: "status",
+      key: "status",
+      render: (text) =>
+        text == "pending" ? <button onClick={updateOrder}>Accept Order</button> : "On Delivery",
     },
   ];
 

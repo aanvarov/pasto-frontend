@@ -4,28 +4,30 @@ import PageHeader from "../../components/PageHeader";
 import { StyledProfile } from "./Profile.style";
 import { t } from "../../utils";
 import { GET_USER } from "../../services/profile.service";
+import { useSelector } from "react-redux";
 
 const { Title, Text } = Typography;
 export default function Profile() {
-  const [user, setUser] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    password: "456123",
-    phone: "123456789",
-    email: "john@example.com",
-    address: "31 The Green London",
-  });
+  const restaurant = useSelector((state) => state.account.restaurant);
+  // const [user, setUser] = useState({
+  //   firstName: "John",
+  //   lastName: "Doe",
+  //   password: "456123",
+  //   phone: "123456789",
+  //   email: "john@example.com",
+  //   address: "31 The Green London",
+  // });
 
-  const fetchUser = async () => {
-    const data = await GET_USER();
-    if (data) {
-      setUser(data);
-    }
-  };
+  // const fetchUser = async () => {
+  //   const data = await GET_USER();
+  //   if (data) {
+  //     setUser(data);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   fetchUser();
+  // }, []);
   return (
     <StyledProfile>
       <PageHeader title={t("My Profile")} />
@@ -34,18 +36,10 @@ export default function Profile() {
         <table className="user-table">
           <tr>
             <td>
-              <Text>First name:</Text>
+              <Text>Restaurant name:</Text>
             </td>
             <td>
-              <Text strong>{user?.firstName}</Text>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <Text>Last name:</Text>
-            </td>
-            <td>
-              <Text strong>{user?.lastName}</Text>
+              <Text strong>{restaurant?.name}</Text>
             </td>
           </tr>
           <tr>
@@ -53,7 +47,7 @@ export default function Profile() {
               <Text>Email:</Text>
             </td>
             <td>
-              <Text strong>{user?.email}</Text>
+              <Text strong>{restaurant?.email}</Text>
             </td>
           </tr>
           <tr>
@@ -61,7 +55,7 @@ export default function Profile() {
               <Text>Phone:</Text>
             </td>
             <td>
-              <Text strong>{user?.phone}</Text>
+              <Text strong>{restaurant?.phone}</Text>
             </td>
           </tr>
           <tr>
@@ -69,7 +63,7 @@ export default function Profile() {
               <Text>Address:</Text>
             </td>
             <td>
-              <Text strong>{user?.address}</Text>
+              <Text strong>{restaurant?.address}</Text>
             </td>
           </tr>
         </table>
