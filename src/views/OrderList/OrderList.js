@@ -214,6 +214,7 @@ function OrderList() {
   useEffect(() => {
     getData();
   }, []);
+
   socket.on("connect", () => {
     console.log(socket.id);
     socket.on("eshak", (data) => {

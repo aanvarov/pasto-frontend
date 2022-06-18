@@ -13,11 +13,39 @@ function OrderDetails(props) {
   //   const { id } = props?.match?.params;
   const [data, setData] = useState({});
 
+  const itemsData = [
+    {
+      img: Profile,
+      name: "Watermelon juice with ice",
+      rate: 4,
+      reviews: 44,
+      qty: 3,
+      price: "$25",
+      totalPrice: "$75",
+    },
+  ];
+
   const columns = [
     {
       title: "Items",
       dataIndex: "items",
       key: "items",
+      render: (text, record) => (
+        <div
+          style={{ display: "flex", alignItems: "center", columnGap: "20px" }}
+        >
+          <img
+            width={87}
+            src={record.img}
+            alt="product"
+            style={{ borderRadius: "10px" }}
+          />
+          <div>
+            <h3>{record.name}</h3>
+            <p>{`(${record.reviews} reviews)`}</p>
+          </div>
+        </div>
+      ),
     },
     {
       title: "Qty",
@@ -73,13 +101,15 @@ function OrderDetails(props) {
             <h2>Wahyu Adi Kurniawan</h2>
             <Button type="primary">Customer</Button>
             <div className="profile_note">
-              <h2>Note Order</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
+              <div className="profile_body">
+                <h2>Note Order</h2>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+              </div>
               <div className="profile_address">
-                <img src="" alt="" />
+                <img src={WhiteDelivery} alt="driver-image" />
                 <p>6 The Avenue, London EC50 4GN</p>
               </div>
             </div>
@@ -95,7 +125,7 @@ function OrderDetails(props) {
         </div>
         <div className="order_block--lg">
           <div className="items-inner">
-            {/* <Table columns={columns} dataSource={data} pagination={{}} /> */}
+            <Table columns={columns} dataSource={itemsData} pagination={{}} />
           </div>
           <div className="map-inner">
             <Map

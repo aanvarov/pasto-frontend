@@ -26,19 +26,42 @@ const OrderDetailsStyle = styled.section`
       }
       .profile_note {
         margin-top: 30px;
-        padding: 30px;
-        padding-bottom: 0;
         text-align: left;
         border-radius: 16px;
         color: white;
         background: #5e6c93;
 
-        h2 {
-          font-size: 24px;
-          color: white;
-          font-weight: bolder;
+        .profile_body {
+          padding: 30px;
+          padding-bottom: 0;
+
+          h2 {
+            font-size: 24px;
+            color: white;
+            font-weight: bolder;
+          }
+        }
+        .profile_address {
+          padding: 16px;
+          padding-bottom: 0;
+          display: flex;
+          align-items: center;
+          column-gap: 10px;
+          background: #2d9cdb;
+          border-radius: 16px;
+
+          img {
+            width: 49px;
+            margin: 0;
+          }
         }
       }
+    }
+    .history {
+      margin-top: 40px;
+      padding: 30px;
+      box-shadow: 0px 0px 10px lightgrey;
+      border-radius: 16px;
     }
   }
   .order_block--lg {
