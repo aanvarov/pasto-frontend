@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Table, Tag, Button } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { StyledOrderList } from "./OrderList.style";
 import Pageheader from "../../components/PageHeader";
 import { FETCH_ORDERS } from "../../services/orders.service";
@@ -205,7 +205,9 @@ function OrderList() {
       key: "status",
       render: (text, record) =>
         text == "pending" ? (
-          <button onClick={() => updateOrder(record)}>Accept Order</button>
+          <Button type="primary" onClick={() => updateOrder(record)}>
+            Accept Order
+          </Button>
         ) : (
           "On Delivery"
         ),
@@ -232,7 +234,10 @@ function OrderList() {
           loading={loading}
           onRow={(record, rowIndex) => {
             return {
-              onClick: (event) => navigate(`/restaurants/orders/${record.id}`),
+              onClick: (event) =>
+                navigate(`/restaurants/orders/${record._id}`, {
+                  state: { ...record },
+                }),
             };
           }}
           dataSource={orders}

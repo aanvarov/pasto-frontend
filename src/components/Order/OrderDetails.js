@@ -1,48 +1,42 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Button, Steps, Select, Table } from "antd";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 import PageHeader from "../../components/PageHeader";
 import OrderDetailsStyle from "./OrderDetailsStyle";
 import Map from "./Map";
 import Profile from "../../assets/images/profile.jpg";
 import WhiteDelivery from "../../assets/images/svg/delivery-white.svg";
+import PhoneIcon from "../../assets/images/svg/phone-icon.svg";
+import DelivryIcon from "../../assets/images/svg/delivry-icon.svg";
 
 const { Step } = Steps;
 const { Option } = Select;
 
-function OrderDetails(props) {
-  //   const { id } = props?.match?.params;
-  const [data, setData] = useState({});
+function OrderDetails() {
+  const locstion = useLocation();
+  const state = locstion.state;
+  const [data, setData] = useState(state.items);
 
-  const itemsData = [
-    {
-      img: Profile,
-      name: "Watermelon juice with ice",
-      rate: 4,
-      reviews: 44,
-      qty: 3,
-      price: "$25",
-      totalPrice: "$75",
-    },
-  ];
+  console.log(state);
 
   const columns = [
     {
       title: "Items",
       dataIndex: "items",
       key: "items",
-      render: (text, record) => (
+      render: (text) => (
         <div
           style={{ display: "flex", alignItems: "center", columnGap: "20px" }}
         >
           <img
             width={87}
-            src={record.img}
+            src={text.img}
             alt="product"
             style={{ borderRadius: "10px" }}
           />
           <div>
-            <h3>{record.name}</h3>
-            <p>{`(${record.reviews} reviews)`}</p>
+            <h3>{text.name}</h3>
           </div>
         </div>
       ),
@@ -51,6 +45,7 @@ function OrderDetails(props) {
       title: "Qty",
       dataIndex: "qty",
       key: "qty",
+      render: (text, record) => record.length,
     },
     {
       title: "Price",
@@ -62,6 +57,17 @@ function OrderDetails(props) {
       dataIndex: "totalPrice",
       key: "totalPrice",
     },
+    {
+      title: "",
+      dataIndex: "action",
+      render: () => (
+        <AiOutlineCloseCircle
+          style={{ cursor: "pointer" }}
+          size="24"
+          color="#FF5B5B"
+        />
+      ),
+    },
   ];
 
   const handleStatusChange = (value) => {
@@ -71,7 +77,7 @@ function OrderDetails(props) {
   return (
     <OrderDetailsStyle>
       <PageHeader
-        title={`Order Details #`}
+        title={`Order Details ${state.orderId}`}
         children={
           <>
             <Button
@@ -97,7 +103,7 @@ function OrderDetails(props) {
       <div className="order_inner-blocks">
         <div className="order_block--sm">
           <div className="profile">
-            <img src={Profile} alt="" />
+            <img src={Profile} alt="customer-image" />
             <h2>Wahyu Adi Kurniawan</h2>
             <Button type="primary">Customer</Button>
             <div className="profile_note">
@@ -125,7 +131,7 @@ function OrderDetails(props) {
         </div>
         <div className="order_block--lg">
           <div className="items-inner">
-            <Table columns={columns} dataSource={itemsData} pagination={{}} />
+            <Table columns={columns} dataSource={data} />
           </div>
           <div className="map-inner">
             <Map
@@ -139,14 +145,27 @@ function OrderDetails(props) {
             <h2>Delivery by</h2>
             <div className="driver">
               <div className="driver-card">
-                <img src={WhiteDelivery} alt="driver-image" />
+                <img src={Profile} alt="driver-image" />
                 <div>
                   <h2>Kevin Hobs Jr.</h2>
                   <p>ID-412455</p>
                 </div>
               </div>
               <div className="driver-data">
-                <div className="card"></div>
+                <div className="card">
+                  <img src={PhoneIcon} alt="phone-icon" />
+                  <div>
+                    <p>Phone number</p>
+                    <h3>+1-202-555-0182</h3>
+                  </div>
+                </div>
+                <div className="card">
+                  <img src={DelivryIcon} alt="delivery-icon" />
+                  <div>
+                    <p>Delivery time</p>
+                    <h3>7:01</h3>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

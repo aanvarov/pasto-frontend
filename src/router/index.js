@@ -41,14 +41,16 @@ export const MAIN_ROUTES = [
     title: "Orders",
   },
   {
-    path: "/restaurants/orderdetails",
+    path: "/restaurants/orders/:id",
     element: OrderDetails,
+    icon: <OrderListIcon size={24} />,
+    title: "Orders",
   },
   {
     path: "/restaurants/profile",
     element: Profile,
     icon: <OrderListIcon size={24} />,
-    title: "Orders",
+    title: "Profile",
   },
 ];
 
