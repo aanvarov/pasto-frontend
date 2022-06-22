@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Button, Steps, Select, Table } from "antd";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import {
+  UPDATE_ORDER,
+  FETCH_ORDER_DETAILS,
+} from "../../services/orders.service";
 import PageHeader from "../../components/PageHeader";
 import OrderDetailsStyle from "./OrderDetailsStyle";
 import Map from "./Map";
@@ -9,43 +13,67 @@ import Profile from "../../assets/images/profile.jpg";
 import WhiteDelivery from "../../assets/images/svg/delivery-white.svg";
 import PhoneIcon from "../../assets/images/svg/phone-icon.svg";
 import DelivryIcon from "../../assets/images/svg/delivry-icon.svg";
+import moment from "moment";
 
 const { Step } = Steps;
 const { Option } = Select;
 
 function OrderDetails() {
-  const locstion = useLocation();
-  const state = locstion.state;
+  const location = useLocation();
+  const { state } = location;
+  const [order, setOrder] = useState({});
   const [data, setData] = useState(state.items);
+  const deliveryLocation = state?.deliveryLocation?.split(",");
+  const restaurantLocation = state?.restaurant?.geoLocation?.split(",");
 
-  console.log(state);
+  const items = {};
+  data.forEach((food) => {
+    if (!items[food._id]) {
+      items[food._id] = {
+        id: food._id,
+        name: food.name,
+        price: food.price,
+        img: food.img,
+        quantity: 0,
+      };
+    }
+    items[food._id].quantity += 1;
+    items[food._id].totalPrice = food.price * items[food._id].quantity;
+  });
+  const foodItems = Object.values(items);
+
+  const fetchOrder = async () => {
+    const data = await FETCH_ORDER_DETAILS(location.state._id);
+    if (data) {
+      setOrder(data);
+    }
+  };
 
   const columns = [
     {
       title: "Items",
       dataIndex: "items",
       key: "items",
-      render: (text) => (
+      render: (text, record) => (
         <div
           style={{ display: "flex", alignItems: "center", columnGap: "20px" }}
         >
           <img
             width={87}
-            src={text.img}
+            src={record.img}
             alt="product"
-            style={{ borderRadius: "10px" }}
+            style={{ borderRadius: "10px", objectFit: "cover" }}
           />
           <div>
-            <h3>{text.name}</h3>
+            <h3>{record.name}</h3>
           </div>
         </div>
       ),
     },
     {
       title: "Qty",
-      dataIndex: "qty",
-      key: "qty",
-      render: (text, record) => record.length,
+      dataIndex: "quantity",
+      key: "quantity",
     },
     {
       title: "Price",
@@ -70,9 +98,21 @@ function OrderDetails() {
     },
   ];
 
-  const handleStatusChange = (value) => {
-    console.log(`selected ${value}`);
+  const handleStatusChange = async (value) => {
+    const data = await UPDATE_ORDER(state._id, { ...order, status: value });
+    setOrder(data);
   };
+
+  const handleCancelOrder = async () => {
+    const data = await UPDATE_ORDER(state._id, {
+      ...order,
+      status: "cancelled",
+    });
+  };
+
+  useEffect(() => {
+    fetchOrder();
+  }, []);
 
   return (
     <OrderDetailsStyle>
@@ -80,17 +120,12 @@ function OrderDetails() {
         title={`Order Details ${state.orderId}`}
         children={
           <>
-            <Button
-              danger
-              size="large"
-              //   onClick={onClick}
-              //   icon={<AiOutlinePlusCircle />}
-            >
+            <Button danger size="large" onClick={handleCancelOrder} icon="">
               Cancel Order
             </Button>
             <Select
               size="large"
-              defaultValue="pending"
+              defaultValue={order?.status ? order.status : state.status}
               onChange={handleStatusChange}
             >
               <Option value="pending">New Order</Option>
@@ -104,7 +139,9 @@ function OrderDetails() {
         <div className="order_block--sm">
           <div className="profile">
             <img src={Profile} alt="customer-image" />
-            <h2>Wahyu Adi Kurniawan</h2>
+            <h2>
+              {state.customer?.firstName} {state.customer?.lastName}
+            </h2>
             <Button type="primary">Customer</Button>
             <div className="profile_note">
               <div className="profile_body">
@@ -122,24 +159,59 @@ function OrderDetails() {
           </div>
           <div className="history">
             <h2>History</h2>
-            <Steps progressDot current={1} direction="vertical">
-              <Step title="Finished" description="This is a description." />
-              <Step title="In Progress" description="This is a description." />
-              <Step title="Waiting" description="This is a description." />
+            <Steps
+              progressDot
+              current={
+                order.status == "pending" ? 0 : order.status == "ready" ? 1 : 2
+              }
+              direction="vertical"
+            >
+              <Step
+                title="Order Created"
+                description={moment(order.createdAt).format(
+                  "MMMM D YYYY, h:mm"
+                )}
+              />
+              <Step
+                title="On Delivery"
+                description={moment(order.updatedAt).format(
+                  "MMMM D YYYY, h:mm"
+                )}
+              />
+              <Step
+                title="Delivered"
+                description={
+                  order.deliveredAt == null
+                    ? "-"
+                    : moment(order.deliveredAt).format("MMMM D YYYY, h:mm")
+                }
+              />
             </Steps>
           </div>
         </div>
         <div className="order_block--lg">
           <div className="items-inner">
-            <Table columns={columns} dataSource={data} />
+            <Table columns={columns} dataSource={foodItems} />
           </div>
           <div className="map-inner">
             <Map
-              origin={{ lat: 41.316441, lng: 69.294861 }}
-              destination={{ lat: 39.647099, lng: 66.960289 }}
+              origin={{
+                lat: parseInt(restaurantLocation[0]),
+                lng: parseInt(restaurantLocation[1]),
+              }}
+              destination={{
+                lat: parseInt(deliveryLocation[0]),
+                lng: parseInt(deliveryLocation[1]),
+              }}
               data={[
-                { lat: 41.316441, lng: 69.294861 },
-                { lat: 39.647099, lng: 66.960289 },
+                {
+                  lat: parseInt(restaurantLocation[0]),
+                  lng: parseInt(restaurantLocation[1]),
+                },
+                {
+                  lat: parseInt(deliveryLocation[0]),
+                  lng: parseInt(deliveryLocation[1]),
+                },
               ]}
             />
             <h2>Delivery by</h2>
@@ -147,7 +219,7 @@ function OrderDetails() {
               <div className="driver-card">
                 <img src={Profile} alt="driver-image" />
                 <div>
-                  <h2>Kevin Hobs Jr.</h2>
+                  <h2>Abror Anvarov</h2>
                   <p>ID-412455</p>
                 </div>
               </div>
@@ -163,7 +235,7 @@ function OrderDetails() {
                   <img src={DelivryIcon} alt="delivery-icon" />
                   <div>
                     <p>Delivery time</p>
-                    <h3>7:01</h3>
+                    <h3>{moment(order.estimatedTime).format("LT")}</h3>
                   </div>
                 </div>
               </div>

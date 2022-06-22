@@ -16,7 +16,11 @@ import {
 import PageHeader from "../../components/PageHeader";
 import StyledFoods from "./Foods.style";
 import { t } from "../../utils";
-import { FETCH_FOODS, DELETE_FOOD, UPDATE_STATUS_FOOD } from "../../services/food.service";
+import {
+  FETCH_FOODS,
+  DELETE_FOOD,
+  UPDATE_STATUS_FOOD,
+} from "../../services/food.service";
 import {
   AiOutlineShoppingCart,
   AiOutlineMore,
@@ -76,7 +80,9 @@ function Foods() {
     try {
       const data = await UPDATE_STATUS_FOOD(
         item?._id,
-        item?.status == "instock" ? { status: "outofstock" } : { status: "instock" }
+        item?.status == "instock"
+          ? { status: "outofstock" }
+          : { status: "instock" }
       );
       fetchData();
       message.success(t("Food status updated successfully"));
@@ -131,7 +137,11 @@ function Foods() {
       />
       {show ? (
         <Suspense fallback="Loading...">
-          <AddModal isVisible={show} hideModal={handleHideModal} fetchData={fetchData} />
+          <AddModal
+            isVisible={show}
+            hideModal={handleHideModal}
+            fetchData={fetchData}
+          />
         </Suspense>
       ) : null}
       {edit && selectedFood ? (
@@ -156,7 +166,9 @@ function Foods() {
               </Button>
             </Dropdown> */}
             <div className="imageWrapper">
-              {item?.status == "outofstock" && <div className="black-overlay"></div>}
+              {item?.status == "outofstock" && (
+                <div className="black-overlay"></div>
+              )}
               <img src={item?.img} alt={item?.name} />
             </div>
             <div className="card__body">
@@ -168,7 +180,7 @@ function Foods() {
               </h2>
               <h3>Status: {item?.status}</h3>
               <Row gutter={16} style={{ width: "100%" }}>
-                <Col span={8}>
+                <Col span={6}>
                   <Button
                     style={{ width: "100%" }}
                     size="large"
@@ -176,10 +188,10 @@ function Foods() {
                     ghost
                     onClick={() => handleEditModal(item)}
                   >
-                    <AiOutlineEdit size={25} /> Edit
+                    <AiOutlineEdit size={25} />
                   </Button>
                 </Col>
-                <Col span={8}>
+                <Col span={12}>
                   <Popconfirm
                     title={`Do you want to make ${
                       item?.status == "instock" ? "out of stock" : " in stock"
@@ -188,20 +200,30 @@ function Foods() {
                     okText="Yes"
                     cancelText="No"
                   >
-                    <Button style={{ width: "100%" }} size="large" type="primary">
-                      Make {item?.status == "instock" ? "out of stock" : " in stock"}
+                    <Button
+                      style={{ width: "100%" }}
+                      size="large"
+                      type="primary"
+                    >
+                      Make{" "}
+                      {item?.status == "instock" ? "out of stock" : " in stock"}
                     </Button>
                   </Popconfirm>
                 </Col>
-                <Col span={8}>
+                <Col span={6}>
                   <Popconfirm
                     title={"Will you delete this food?"}
                     onConfirm={() => handleDeleteFood(item)}
                     okText="Yes"
                     cancelText="No"
                   >
-                    <Button style={{ width: "100%" }} size="large" type="primary" danger>
-                      <AiOutlineDelete size={25} /> Delete
+                    <Button
+                      style={{ width: "100%" }}
+                      size="large"
+                      type="primary"
+                      danger
+                    >
+                      <AiOutlineDelete size={25} />
                     </Button>
                   </Popconfirm>
                 </Col>
