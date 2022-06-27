@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag } from "antd";
+import { Table, Tag, Button } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { StyledOrderList } from "./OrderList.style";
 import Pageheader from "../../components/PageHeader";
-import { FETCH_ORDERS } from "../../services/orders.service";
+import { FETCH_ORDERS, UPDATE_ORDER } from "../../services/orders.service";
 import { t } from "../../utils";
 import socket from "../../services/socket.service";
-import Axios from "../../utils/axios";
+import moment from "moment";
 
 function OrderList() {
   // const [data, setData] = useState([
@@ -134,6 +135,7 @@ function OrderList() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
   const getData = async () => {
     setLoading(true);
@@ -146,20 +148,16 @@ function OrderList() {
     setLoading(false);
   };
 
-  const updateOrder = (record) => {
+  const updateOrder = async (record) => {
     console.log("updateOrder", record);
     // update order status
-    Axios.put(`/orders/${record._id}`, {
-      status: "In Progress",
-    })
-      .then((res) => {
-        console.log("res", res);
-        getData();
-        socket.emit("orderStatus");
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
+    const data = await UPDATE_ORDER(record._id, { ...record, status: "ready" });
+
+    if (data) {
+      console.log("res", data);
+      getData();
+      socket.emit("orderStatus");
+    }
   };
 
   const columns = [
@@ -172,6 +170,7 @@ function OrderList() {
       title: "Date",
       dataIndex: "createdAt",
       key: "createdAt",
+      render: (text) => moment(text).format("MMM D HH:MM"),
     },
     {
       title: "Customer Name",
@@ -195,7 +194,14 @@ function OrderList() {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (text) => (text == "pending" ? "New Order" : "On Delivery"),
+      render: (text) =>
+        text == "pending"
+          ? "New Order"
+          : text == "cancelled"
+          ? "Cancelled"
+          : text == "delivered"
+          ? "Delivered"
+          : "On Delivery",
     },
     {
       title: "",
@@ -203,7 +209,13 @@ function OrderList() {
       key: "status",
       render: (text, record) =>
         text == "pending" ? (
-          <button onClick={() => updateOrder(record)}>Accept Order</button>
+          <Button type="primary" onClick={() => updateOrder(record)}>
+            Accept Order
+          </Button>
+        ) : text == "cancelled" ? (
+          "Cancelled"
+        ) : text == "delivered" ? (
+          "Delivered"
         ) : (
           "On Delivery"
         ),
@@ -212,6 +224,7 @@ function OrderList() {
   useEffect(() => {
     getData();
   }, []);
+
   socket.on("connect", () => {
     console.log(socket.id);
     socket.on("eshak", (data) => {
@@ -227,6 +240,14 @@ function OrderList() {
         <Table
           columns={columns}
           loading={loading}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) =>
+                navigate(`/restaurants/orders/${record._id}`, {
+                  state: { ...record },
+                }),
+            };
+          }}
           dataSource={orders}
           pagination={{
             current: page,
