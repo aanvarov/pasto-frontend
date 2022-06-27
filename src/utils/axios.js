@@ -4,17 +4,15 @@ import { clearRestaurant, updateRestaurant } from "../store/auth/reducer";
 
 const baseURL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:4001/api/v1"
-    : "http://localhost:4001/api/v1";
+    ? "http://localhost:3001/api/v1"
+    : "http://localhost:3001/api/v1";
 const axios = Axios.create({ baseURL, withCredentials: true });
 
 axios.interceptors.request.use((configs) => {
   const accessToken = store.getState().account?.restaurant?.accessToken || "";
   configs.headers.authorization = accessToken ? `Bearer ${accessToken}` : "";
   const refreshToken = store.getState().account?.restaurant?.refreshToken || "";
-  configs.headers["x-refresh-token"] = refreshToken
-    ? `Bearer ${refreshToken}`
-    : "";
+  configs.headers["x-refresh-token"] = refreshToken ? `Bearer ${refreshToken}` : "";
   return configs;
 });
 
@@ -22,9 +20,7 @@ axios.interceptors.response.use(
   (res) => {
     console.log("res.headers[x-access-token]", { res });
     if (res.headers["x-access-token"]) {
-      store.dispatch(
-        updateRestaurant({ accessToken: res.headers["x-access-token"] })
-      );
+      store.dispatch(updateRestaurant({ accessToken: res.headers["x-access-token"] }));
     }
     return res;
   },
