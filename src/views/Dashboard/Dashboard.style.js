@@ -8,4 +8,7 @@ export const StyledDashboard = styled.div`
     align-items: center;
     gap: 20px;
   }
+  .ant-row {
+    row-gap: 20px !important;
+  }
 `;
