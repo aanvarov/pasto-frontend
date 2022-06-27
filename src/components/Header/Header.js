@@ -25,25 +25,7 @@ function Header() {
         style={{ width: "100%", maxWidth: "600px" }}
       />
       <div className="right-side">
-        <div className="notifications">
-          <div style={{ backgroundColor: " rgba(45, 156, 219, 0.15)" }}>
-            <NotificationIcon />
-            <span style={{ backgroundColor: "#2D9CDB" }}>12</span>
-          </div>
-          <div style={{ backgroundColor: " rgba(45, 156, 219, 0.15)" }}>
-            <MessageIcon />
-            <span style={{ backgroundColor: "#2D9CDB" }}>12</span>
-          </div>
-          <div style={{ backgroundColor: "rgba(94, 108, 147, 0.15)" }}>
-            <GiftIcon />
-            <span style={{ backgroundColor: "#5E6C93" }}>12</span>
-          </div>
-          <div style={{ backgroundColor: "rgba(255, 91, 91, 0.15)" }}>
-            <SettingsIcon />
-            <span style={{ backgroundColor: "#FF5B5B" }}>12</span>
-          </div>
-        </div>
-        <div className="vertical-devider"></div>
+        <div style={{ background: "none" }} className="vertical-devider"></div>
         <Link to="/restaurants/profile">
           <div className="user-profile">
             <h3>Hello, {restaurant?.name}</h3>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag, Button } from "antd";
+import { Table, Tag, Button, Popover } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { FiMoreHorizontal } from "react-icons/fi";
 import { StyledOrderList } from "./OrderList.style";
 import Pageheader from "../../components/PageHeader";
 import { FETCH_ORDERS, UPDATE_ORDER } from "../../services/orders.service";
@@ -143,15 +144,14 @@ function OrderList() {
     if (data) {
       console.log("orders", data);
       setOrders(data);
-      // setData(data);
     }
     setLoading(false);
   };
 
-  const updateOrder = async (record) => {
+  const updateOrder = async (record, status) => {
     console.log("updateOrder", record);
     // update order status
-    const data = await UPDATE_ORDER(record._id, { ...record, status: "ready" });
+    const data = await UPDATE_ORDER(record._id, { ...record, status });
 
     if (data) {
       console.log("res", data);
@@ -188,37 +188,100 @@ function OrderList() {
       title: "Amount ",
       dataIndex: "total",
       key: "total",
-      render: (text) => `${text} UZS`,
+      render: (text) => `${text.toLocaleString("fi-FI")} UZS`,
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
       render: (text) =>
-        text == "pending"
-          ? "New Order"
-          : text == "cancelled"
-          ? "Cancelled"
-          : text == "delivered"
-          ? "Delivered"
-          : "On Delivery",
+        text == "pending" ? (
+          <div
+            style={{
+              background: "#FFF0ED",
+              color: "#FF6D4D",
+              textAlign: "center",
+              padding: "10px 10px",
+              borderRadius: "10px",
+            }}
+          >
+            New Order
+          </div>
+        ) : text == "cancelled" ? (
+          <div
+            style={{
+              background: "#ff5b5b40",
+              color: "#FF5B5B",
+              textAlign: "center",
+              padding: "10px 10px",
+              borderRadius: "10px",
+            }}
+          >
+            Cancelled
+          </div>
+        ) : text == "delivered" ? (
+          <div
+            style={{
+              background: "#D9F3EA",
+              color: "#00B074",
+              textAlign: "center",
+              padding: "10px 10px",
+              borderRadius: "10px",
+            }}
+          >
+            Delivered
+          </div>
+        ) : (
+          <div
+            style={{
+              background: "#DFF0FA",
+              color: "#2D9CDB",
+              textAlign: "center",
+              padding: "10px 10px",
+              borderRadius: "10px",
+            }}
+          >
+            In Progress
+          </div>
+        ),
     },
     {
       title: "",
       dataIndex: "status",
       key: "status",
-      render: (text, record) =>
-        text == "pending" ? (
-          <Button type="primary" onClick={() => updateOrder(record)}>
-            Accept Order
+      render: (text, record) => (
+        <Popover
+          placement="bottom"
+          content={
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                rowGap: "10px",
+              }}
+            >
+              <Button
+                type="primary"
+                onClick={() => updateOrder(record, "ready")}
+              >
+                Accept Order
+              </Button>
+              <Button
+                type="primary"
+                danger
+                onClick={() => updateOrder(record, "cancelled")}
+              >
+                Cancel
+              </Button>
+            </div>
+          }
+          trigger="hover"
+        >
+          <Button>
+            <FiMoreHorizontal size={20} />
           </Button>
-        ) : text == "cancelled" ? (
-          "Cancelled"
-        ) : text == "delivered" ? (
-          "Delivered"
-        ) : (
-          "On Delivery"
-        ),
+        </Popover>
+      ),
     },
   ];
   useEffect(() => {

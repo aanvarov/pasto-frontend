@@ -79,11 +79,13 @@ function OrderDetails() {
       title: "Price",
       dataIndex: "price",
       key: "price",
+      render: (text) => text.toLocaleString("fi-FI"),
     },
     {
       title: "Total Price",
       dataIndex: "totalPrice",
       key: "totalPrice",
+      render: (text) => text.toLocaleString("fi-FI"),
     },
     {
       title: "",
@@ -129,7 +131,7 @@ function OrderDetails() {
               onChange={handleStatusChange}
             >
               <Option value="pending">New Order</Option>
-              <Option value="ready">On Delivery</Option>
+              <Option value="ready">In Progress</Option>
               <Option value="delivered">Delivered</Option>
             </Select>
           </>
@@ -173,7 +175,7 @@ function OrderDetails() {
                 )}
               />
               <Step
-                title="On Delivery"
+                title="In Progress"
                 description={moment(order.updatedAt).format(
                   "MMMM D YYYY, h:mm"
                 )}

@@ -35,7 +35,7 @@ export const StyledHeader = styled.header`
       }
     }
   }
-  .right-side{
+  .right-side {
     width: 100%;
     max-width: 450px;
     display: flex;
@@ -77,8 +77,5 @@ export const StyledHeader = styled.header`
 
   @media only screen and (max-width: 1070px) {
     width: 100%;
-    .notifications, .vertical-devider, .user-profile{
-    display: none;
   }
-}
 `;
