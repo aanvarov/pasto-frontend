@@ -4,9 +4,10 @@ import { clearRestaurant, updateRestaurant } from "../store/auth/reducer";
 
 const baseURL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:3001/api/v1"
-    : "http://localhost:3001/api/v1";
+    ? "https://yemek.alitechbot.uz/api/v1"
+    : "https://yemek.alitechbot.uz/api/v1";
 const axios = Axios.create({ baseURL, withCredentials: true });
+// yemek.alitechbot.uz
 
 axios.interceptors.request.use((configs) => {
   const accessToken = store.getState().account?.restaurant?.accessToken || "";
