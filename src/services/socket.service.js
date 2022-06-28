@@ -1,4 +1,5 @@
 import { io } from "socket.io-client";
 
-const socket = io("ws://yemek.alitechbot.uz", { transports: ["websocket"] });
+// wss or https
+const socket = io("wss://yemek.alitechbot.uz", { transports: ["websocket"] });
 export default socket;
