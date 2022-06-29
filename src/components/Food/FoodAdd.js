@@ -104,10 +104,12 @@ export default function FoodAdd({ isVisible, hideModal, fetchData }) {
         </Form.Item>
         <Form.Item label={t("Category")}>
           <Select
+            showSearch
             style={{ width: "100%" }}
             defaultValue="Choose category"
             onChange={handleSelectChange}
             value={inputValues.category}
+            optionFilterProp="children"
           >
             {categories?.map((item) => (
               <Option key={item?._id} value={item?._id}>

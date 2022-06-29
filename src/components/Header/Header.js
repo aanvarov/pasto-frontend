@@ -30,7 +30,7 @@ function Header() {
           <div className="user-profile">
             <h3>Hello, {restaurant?.name}</h3>
             <div className="user-img">
-              <img src={Profile} alt="user-image" />
+              <img src={restaurant.imgUrl ?? Profile} alt="user-image" />
             </div>
           </div>
         </Link>

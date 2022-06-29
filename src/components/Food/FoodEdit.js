@@ -104,9 +104,11 @@ export default function FoodEdit({
         </Form.Item>
         <Form.Item label={t("Category")}>
           <Select
+            showSearch
             style={{ width: "100%" }}
             onChange={handleSelectChange}
-            value={inputValues.category}
+            defaultValue={inputValues.category[0]._id}
+            optionFilterProp="children"
           >
             {categories?.map((item) => (
               <Option key={item?._id} value={item?._id}>

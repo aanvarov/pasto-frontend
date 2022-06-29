@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
-import { Modal, Input, Form, message } from "antd";
+import { Modal, Input, Form, message, TimePicker } from "antd";
 import { useDispatch } from "react-redux";
+import moment from "moment";
 import { updateRestaurant } from "../../store/auth/reducer";
 import { UPDATE_RESTAURANT } from "../../services/restaurant.service";
 import PropTypes from "prop-types";
@@ -29,6 +30,14 @@ export default function RestaurantEdit({ isVisible, hideModal, data = {} }) {
       setLong(value);
     }
   }, []);
+
+  const handleTimeChange = (time, timeString, name) => {
+    if (name == "openHour") {
+      setInputValues((state) => ({ ...state, openHour: timeString }));
+    } else {
+      setInputValues((state) => ({ ...state, closeHour: timeString }));
+    }
+  };
 
   const handleSubmit = async () => {
     const { _id, ...rest } = inputValues;
@@ -112,6 +121,28 @@ export default function RestaurantEdit({ isVisible, hideModal, data = {} }) {
             value={long}
             onChange={handleAddressChange}
             required
+          />
+        </Form.Item>
+        <Form.Item label={t("Image")}>
+          <Input
+            name="imgUrl"
+            type="text"
+            value={inputValues.imgUrl}
+            onChange={handleInputChange}
+          />
+        </Form.Item>
+        <Form.Item label={t("Open Hour")}>
+          <TimePicker
+            style={{ width: "100%" }}
+            onChange={() => handleTimeChange("openHour")}
+            defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
+          />
+        </Form.Item>
+        <Form.Item label={t("Close Hour")}>
+          <TimePicker
+            style={{ width: "100%" }}
+            onChange={() => handleTimeChange("closeHour")}
+            defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
           />
         </Form.Item>
       </Form>

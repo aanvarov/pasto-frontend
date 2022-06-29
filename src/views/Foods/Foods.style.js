@@ -11,7 +11,7 @@ const StyledFoods = styled.section`
     .card {
       position: relative;
       min-width: 336px;
-      height: 480px;
+      min-height: 480px;
       flex: 1;
       background: #fbfafa;
       box-shadow: 3px 3px 15px #a9a9a975;

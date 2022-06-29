@@ -8,7 +8,7 @@ const StyledAuth = styled.section`
   background-size: cover;
 
   .auth__inner {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -176,15 +176,17 @@ function OrderDetails() {
               />
               <Step
                 title="In Progress"
-                description={moment(order.updatedAt).format(
-                  "MMMM D YYYY, h:mm"
-                )}
+                description={
+                  order.status == "ready"
+                    ? moment(order.updatedAt).format("MMMM D YYYY, h:mm")
+                    : "-"
+                }
               />
               <Step
                 title="Delivered"
                 description={
-                  order.status == "delivered"
-                    ? moment(order.updatedAt).format("MMMM D YYYY, h:mm")
+                  order.deliveredAt != null
+                    ? moment(order.deliveredAt).format("MMMM D YYYY, h:mm")
                     : "-"
                 }
               />
