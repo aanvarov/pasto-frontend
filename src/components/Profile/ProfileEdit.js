@@ -12,6 +12,7 @@ export default function RestaurantEdit({ isVisible, hideModal, data = {} }) {
   const [inputValues, setInputValues] = useState({
     ...data,
   });
+  const [hour, setHour] = useState("");
   const address = data?.geoLocation?.split(",");
   const [lat, setLat] = useState(address?.[0] || "");
   const [long, setLong] = useState(address?.[1] || "");
@@ -31,8 +32,8 @@ export default function RestaurantEdit({ isVisible, hideModal, data = {} }) {
     }
   }, []);
 
-  const handleTimeChange = (time, timeString, name) => {
-    if (name == "openHour") {
+  const handleTimeChange = (time, timeString) => {
+    if (hour == "openHour") {
       setInputValues((state) => ({ ...state, openHour: timeString }));
     } else {
       setInputValues((state) => ({ ...state, closeHour: timeString }));
@@ -41,7 +42,7 @@ export default function RestaurantEdit({ isVisible, hideModal, data = {} }) {
 
   const handleSubmit = async () => {
     const { _id, ...rest } = inputValues;
-    console.log(lat, long);
+    console.log(inputValues);
     const data = await UPDATE_RESTAURANT(_id, {
       ...rest,
       geoLocation: `${lat},${long}`,
@@ -53,6 +54,8 @@ export default function RestaurantEdit({ isVisible, hideModal, data = {} }) {
       hideModal();
     }
   };
+
+  console.log(inputValues);
 
   return (
     <Modal
@@ -134,15 +137,27 @@ export default function RestaurantEdit({ isVisible, hideModal, data = {} }) {
         <Form.Item label={t("Open Hour")}>
           <TimePicker
             style={{ width: "100%" }}
-            onChange={() => handleTimeChange("openHour")}
+            onChange={handleTimeChange}
+            onFocus={() => setHour("openHour")}
             defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
+            defaultValue={
+              inputValues.openHour
+                ? moment(inputValues.openHour, "HH:mm:ss")
+                : moment("00:00:00", "HH:mm:ss")
+            }
           />
         </Form.Item>
         <Form.Item label={t("Close Hour")}>
           <TimePicker
             style={{ width: "100%" }}
-            onChange={() => handleTimeChange("closeHour")}
+            onChange={handleTimeChange}
+            onFocus={() => setHour("closeHour")}
             defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
+            defaultValue={
+              inputValues.closeHour
+                ? moment(inputValues.closeHour, "HH:mm:ss")
+                : moment("00:00:00", "HH:mm:ss")
+            }
           />
         </Form.Item>
       </Form>
